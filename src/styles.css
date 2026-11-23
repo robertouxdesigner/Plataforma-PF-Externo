@@ -46,7 +46,13 @@ svg.i{width:18px;height:18px;flex:none}
 
 /* ---------- shell ---------- */
 .shell{display:flex;align-items:flex-start;min-height:640px;background:var(--bg)}
-.side{width:236px;flex:none;align-self:stretch;max-height:520px;background:var(--bg);box-shadow:2px 2px 4px #0000001f;padding-top:14px;border-radius:0 0 4px 0}
+.side{width:236px;flex:none;align-self:stretch;max-height:520px;background:transparent;padding-top:58px}
+.side-title{margin:0 0 16px;padding-left:32px;font-size:14px;color:var(--rule)}
+.drawer-scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:80}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--bg);box-shadow:-4px 0 16px #0000002e;z-index:90;padding:24px;animation:drawer-in .25s}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.drawer-head h2{margin:0}
+@keyframes drawer-in{from{transform:translateX(100%)}to{transform:none}}
 .side nav{display:flex;flex-direction:column}
 .side a{display:flex;align-items:center;gap:10px;margin:0 14px 6px;padding:12px 18px;color:var(--link);text-decoration:none;font-size:13.5px;border-radius:2px}
 .side a:hover{background:var(--side-hover)}
@@ -353,3 +359,13 @@ table.dt{width:100%;border-collapse:collapse;font-size:12.5px;min-width:760px}
 /* links Angular (routerLink) com o mesmo visual dos botões originais */
 a.dpeek,a.dcard.add,a.act,a.ab{text-decoration:none;color:inherit}
 a.dcard.add{color:var(--link)}a.ab{color:var(--link)}a.act{color:var(--link)}
+
+/* cartões de resumo (Solicitações): título, número e legenda na mesma linha */
+.stats.flat .stat{padding:30px;background:#fff;border:1px solid var(--line);border-radius:4px;box-shadow:none}
+.stats.flat .stat.sel{border:1px solid var(--table-title);border-bottom-width:8px;padding-bottom:23px;box-shadow:none}
+.stats.flat .stat .h{padding:0;background:none;font-size:16px;font-weight:700;letter-spacing:0;color:#343a40}
+.stats.flat .stat .b{padding:0;margin-top:26px;display:flex;align-items:baseline;gap:14px}
+.stats.flat .stat .n{margin:0;font-size:48px;font-weight:700;line-height:1;color:#343a40}
+.stats.flat .stat .l{font-size:16px;color:#343a40}
+.stats.flat .stat:nth-child(1) .n{color:#856404}
+.stats.flat .stat:nth-child(3) .n{color:#6a6d7c}

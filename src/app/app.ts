@@ -36,6 +36,7 @@ import { Modals, Store, Toasts } from './shared/store';
 
     <div class="shell">
       <aside class="side" id="side" aria-label="Menu">
+<h2 class="page-title side-title">Sub-menu</h2>
         <nav>
           <a routerLink="/solicitacoes" [class.on]="!isCart()" [attr.aria-current]="!isCart() ? 'page' : null"><pf-icon name="file" />Solicitações</a>
           <a routerLink="/carteira" [class.on]="isCart()" [attr.aria-current]="isCart() ? 'page' : null"><pf-icon name="wallet" />Carteira<span class="new">NOVO</span></a>
@@ -52,14 +53,6 @@ import { Modals, Store, Toasts } from './shared/store';
       </div></div>
       <div class="foot2">© Copyright Polícia Federal - PF, Diretoria de Tecnologia da Informação e Inovação - DTI</div>
     </footer>
-
-    <details class="demo">
-      <summary>Controles do protótipo</summary>
-      <div>
-        <button type="button" (click)="s.expired.set(!s.expired())">{{ s.expired() ? 'Voltar CR para válido' : 'Simular CR vencido' }}</button>
-        <button type="button" (click)="resetAll()">Reiniciar protótipo</button>
-      </div>
-    </details>
 
     <pf-modal-host />
     <div class="toasts" aria-live="polite">

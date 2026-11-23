@@ -9,12 +9,17 @@ import { Store, Toasts } from '../shared/store';
   imports: [Icon, RouterLink],
   host: { style: 'display:block' },
   template: `
-    @for (r of pend(); track r.prot) {
-      <div class="msg"><pf-icon name="alert" /><span class="t">A solicitação {{ r.tit }} - {{ r.prot }} tem pendências na etapa de documentação.</span></div>
+    <div class="msg" style="background:var(--side-hover);color:var(--side-on)"><pf-icon name="wallet" /><span class="t"><b>Novo:</b> os documentos emitidos para você agora ficam reunidos na <b>Carteira</b>.</span><a class="lnk" href="#" (click)="$event.preventDefault(); drawer = true">Abrir carteira</a></div>
+    @if (drawer) {
+      <div class="drawer-scrim" (click)="drawer = false"></div>
+      <aside class="drawer" role="dialog" aria-label="Carteira">
+        <div class="drawer-head"><h2 class="page-title">Carteira</h2><button type="button" class="ab" aria-label="Fechar" (click)="drawer = false"><pf-icon name="x" /></button></div>
+        <p>Os documentos emitidos para você ficam reunidos na Carteira.</p>
+        <a class="btn" routerLink="/carteira" (click)="drawer = false">Ir para a Carteira</a>
+      </aside>
     }
-    <div class="msg" style="background:var(--side-hover);color:var(--side-on)"><pf-icon name="wallet" /><span class="t"><b>Novo:</b> os documentos emitidos para você agora ficam reunidos na <b>Carteira</b>.</span><a class="lnk" routerLink="/carteira">Abrir carteira</a></div>
     <h2 class="page-title" style="margin-top:14px">Portal de Solicitações</h2>
-    <div class="stats">
+    <div class="stats flat">
       <button type="button" class="stat" [class.sel]="s.solSt() === AG" (click)="toggle(AG)"><div class="h">MINHAS PENDÊNCIAS</div><div class="b"><div class="n">{{ s.solCount(AG) }}</div><div class="l">solicitações pendentes de ação</div></div></button>
       <button type="button" class="stat" [class.sel]="s.solSt() === EA" (click)="toggle(EA)"><div class="h">EM PROCESSAMENTO</div><div class="b"><div class="n">{{ s.solCount(EA) }}</div><div class="l">solicitações dependentes da <b>PF</b></div></div></button>
       <button type="button" class="stat" [class.sel]="s.solSt() === CO" (click)="toggle(CO)"><div class="h">FINALIZADAS</div><div class="b"><div class="n">{{ s.solCount(CO) }}</div><div class="l">solicitações concluídas</div></div></button>
@@ -61,6 +66,7 @@ import { Store, Toasts } from '../shared/store';
   `,
 })
 export class Solicitacoes {
+  drawer = false;
   s = inject(Store);
   toast = inject(Toasts);
   Math = Math;
