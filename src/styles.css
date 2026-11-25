@@ -47,7 +47,7 @@ svg.i{width:18px;height:18px;flex:none}
 /* ---------- shell ---------- */
 .shell{display:flex;align-items:flex-start;min-height:640px;background:var(--bg)}
 .side{width:236px;flex:none;align-self:stretch;max-height:520px;background:transparent;padding-top:58px}
-.side-title{margin:0 0 16px;padding-left:32px;font-size:14px;color:var(--rule)}
+.side .side-title{margin:0 0 16px;padding-left:32px;color:var(--Grey-Grey400,#8E919F);font-family:Roboto,sans-serif;font-size:12px;font-style:normal;font-weight:500;line-height:16px}
 .drawer-scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:80}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--bg);box-shadow:-4px 0 16px #0000002e;z-index:90;padding:24px;animation:drawer-in .25s}
 .drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
@@ -364,15 +364,6 @@ table.dt{width:100%;border-collapse:collapse;font-size:12.5px;min-width:760px}
 a.dpeek,a.dcard.add,a.act,a.ab{text-decoration:none;color:inherit}
 a.dcard.add{color:var(--link)}a.ab{color:var(--link)}a.act{color:var(--link)}
 
-/* cartões de resumo (Solicitações): título, número e legenda na mesma linha */
-.stats.flat .stat{padding:30px;background:#fff;border:1px solid var(--line);border-radius:4px;box-shadow:none}
-.stats.flat .stat.sel{border:1px solid var(--table-title);border-bottom-width:8px;padding-bottom:23px;box-shadow:none}
-.stats.flat .stat .h{padding:0;background:none;font-size:16px;font-weight:700;letter-spacing:0;color:#343a40}
-.stats.flat .stat .b{padding:0;margin-top:26px;display:flex;align-items:baseline;gap:14px}
-.stats.flat .stat .n{margin:0;font-size:48px;font-weight:700;line-height:1;color:#343a40}
-.stats.flat .stat .l{font-size:16px;color:#343a40}
-.stats.flat .stat:nth-child(1) .n{color:#856404}
-.stats.flat .stat:nth-child(3) .n{color:#6a6d7c}
 
 /* Carteira (home) — Figma Portal PF, nó 38258:7170 */
 .main:has(pf-carteira){padding:10px 32px 64px 0}
@@ -396,8 +387,6 @@ pf-carteira .btn{gap:8px;font-weight:600}
 .cstat.k-all .n,.cstat.k-warn .n{color:#856404}
 .cstat.k-ok .n{color:#287831}
 .cstat.k-lock .n{color:#3363cc}
-pf-carteira .tbar{margin:0;padding:38px 18px 0 0}
-pf-carteira .tbar h2{line-height:29px;color:var(--table-title)}
 .filter-label{margin:16px 0 0;font-size:12.5px;line-height:18px;color:var(--muted)}
 pf-carteira .chips{margin:0;padding-top:14px;flex:1}
 .filter-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px}
@@ -472,5 +461,20 @@ pf-carteira .tscroll{margin:36px 0 0}
 .dbtns{display:flex;gap:14px;margin-left:auto}
 .dbtns .btn{gap:8px;font-weight:600}
 pf-documento .panel>h4{background:#fff;border-bottom:1px solid #ecedee;line-height:17.4px}
-pf-carteira .tbar{gap:1px 1px;row-gap:16px}
 .cacts button:not(.more){justify-content:flex-start;padding-left:16px}
+
+/* barra de busca — Figma Portal PF, nó 38301:18717 (Carteira e Solicitações) */
+.searchbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:38px}
+.sgroup{display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px;flex:1 1 auto;min-width:0}
+.sgroup h2{margin:0;font-size:20px;font-weight:600;line-height:29px;color:var(--table-title)}
+.sgroup .inp{flex:0 1 468px;min-width:min(100%,200px);height:30px;background:#fff}
+.sgroup .inp::placeholder{color:#757575}
+.searchbar .btn{gap:8px;font-weight:600}
+
+/* indicadores em Solicitações (mesmo componente da Carteira) */
+.cstats.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+pf-solicitacoes .cstats{margin-top:22px}
+.cstat.k-proc .n{color:#3363cc}
+pf-solicitacoes .tscroll{margin:16px 0 0}
+pf-solicitacoes .pager{margin:14px 0 0}
+@media (max-width:900px){.cstats.three{grid-template-columns:minmax(0,1fr)}}

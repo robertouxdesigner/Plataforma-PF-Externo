@@ -19,15 +19,15 @@ import { Store, Toasts } from '../shared/store';
       </aside>
     }
     <h2 class="page-title" style="margin-top:14px">Portal de Solicitações</h2>
-    <div class="stats flat">
-      <button type="button" class="stat" [class.sel]="s.solSt() === AG" (click)="toggle(AG)"><div class="h">MINHAS PENDÊNCIAS</div><div class="b"><div class="n">{{ s.solCount(AG) }}</div><div class="l">solicitações pendentes de ação</div></div></button>
-      <button type="button" class="stat" [class.sel]="s.solSt() === EA" (click)="toggle(EA)"><div class="h">EM PROCESSAMENTO</div><div class="b"><div class="n">{{ s.solCount(EA) }}</div><div class="l">solicitações dependentes da <b>PF</b></div></div></button>
-      <button type="button" class="stat" [class.sel]="s.solSt() === CO" (click)="toggle(CO)"><div class="h">FINALIZADAS</div><div class="b"><div class="n">{{ s.solCount(CO) }}</div><div class="l">solicitações concluídas</div></div></button>
+    <div class="cstats three">
+      <button type="button" class="cstat k-all" [class.sel]="s.solSt() === AG" [attr.aria-pressed]="s.solSt() === AG" (click)="toggle(AG)"><span class="h">MINHAS PENDÊNCIAS</span><span class="b"><span class="n">{{ s.solCount(AG) }}</span><span class="l">solicitações pendentes de ação</span></span></button>
+      <button type="button" class="cstat k-proc" [class.sel]="s.solSt() === EA" [attr.aria-pressed]="s.solSt() === EA" (click)="toggle(EA)"><span class="h">EM PROCESSAMENTO</span><span class="b"><span class="n">{{ s.solCount(EA) }}</span><span class="l">solicitações dependentes da <b>PF</b></span></span></button>
+      <button type="button" class="cstat k-ok" [class.sel]="s.solSt() === CO" [attr.aria-pressed]="s.solSt() === CO" (click)="toggle(CO)"><span class="h">FINALIZADAS</span><span class="b"><span class="n">{{ s.solCount(CO) }}</span><span class="l">solicitações concluídas</span></span></button>
     </div>
-    <div class="tbar"><h2>Minhas solicitações</h2>
-      <input class="inp" type="search" placeholder="Buscar" maxlength="100" [value]="s.solQ()" (input)="search($event)" aria-label="Buscar solicitações">
-      <span class="grow"></span>
-      <button type="button" class="btn" (click)="toast.show('Abrindo catálogo de serviços para nova solicitação…', 'info')"><pf-icon name="check" />Iniciar nova solicitação</button></div>
+    <div class="searchbar">
+      <div class="sgroup"><h2>Minhas solicitações</h2>
+        <input class="inp" type="search" placeholder="Buscar por nome ou protocolo" maxlength="100" [value]="s.solQ()" (input)="search($event)" aria-label="Buscar solicitações"></div>
+      <button type="button" class="btn" (click)="toast.show('Abrindo catálogo de serviços para nova solicitação…', 'info')"><img src="carteira/plus.svg" width="18" height="18" alt="">Iniciar nova solicitação</button></div>
     <div class="tscroll"><table class="dt"><thead><tr>
       @for (c of cols; track c[0]) {
         <th class="s" (click)="sort(c[0])" [attr.aria-sort]="s.solSort() === c[0] ? (s.solDir() > 0 ? 'ascending' : 'descending') : 'none'">{{ c[1] }}<span class="si"><pf-icon name="sort" /></span></th>

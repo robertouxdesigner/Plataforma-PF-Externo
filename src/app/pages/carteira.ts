@@ -28,9 +28,9 @@ import { Modals, Store, Toasts } from '../shared/store';
       <button type="button" class="cstat k-warn" [class.sel]="s.st() === 'atencao'" [attr.aria-pressed]="s.st() === 'atencao'" (click)="s.st.set('atencao')"><span class="h">PRECISAM DE ATENÇÃO</span><span class="b"><span class="n">{{ s.count('warn') + s.count('bad') }}</span><span class="l">Vencidos ou a vencer<br>em 30 dias</span></span></button>
       <button type="button" class="cstat k-lock" [class.sel]="s.st() === 'bloqueados'" [attr.aria-pressed]="s.st() === 'bloqueados'" (click)="s.st.set('bloqueados')"><span class="h">PRECISAM DE ATENÇÃO</span><span class="b"><span class="n">{{ s.count('lock') }}</span><span class="l">bloqueados pela PF</span></span></button>
     </div>
-    <div class="tbar"><h2>Meus documentos</h2>
-      <input class="inp" type="search" placeholder="Buscar por nome ou número" [value]="s.q()" (input)="s.q.set(val($event))" aria-label="Buscar documentos">
-      <span class="grow"></span>
+    <div class="searchbar">
+      <div class="sgroup"><h2>Meus documentos</h2>
+        <input class="inp" type="search" placeholder="Buscar por nome ou número" [value]="s.q()" (input)="s.q.set(val($event))" aria-label="Buscar documentos"></div>
       <a class="btn" routerLink="/adicionar"><img src="carteira/plus.svg" width="18" height="18" alt="">Adicionar documento</a></div>
     <p class="filter-label">Filtro:</p>
     <div class="filter-row">
