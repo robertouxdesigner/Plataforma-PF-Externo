@@ -427,11 +427,17 @@ pf-carteira .tscroll{margin:36px 0 0}
 @media (max-width:900px){.main:has(pf-carteira){padding:16px 16px 48px}}
 @media (max-width:576px){.cstats{grid-template-columns:minmax(0,1fr)}}
 
-/* hover do cartão: azul mais escuro (Frontline azul 200/100) */
-.cart::before{content:"";position:absolute;inset:0;background:linear-gradient(#a1c6ed,#cfdbe8);opacity:0;transition:opacity .2s}
-.cart img{transition:filter .2s}
+/* hover do cartão — Figma Portal PF, nó 38301:18755 (também no foco por teclado) */
+.ccard{transition:box-shadow .2s,border-color .2s}
+.cbody,.cacts{transition:background-color .2s}
+.cart::before{content:"";position:absolute;inset:0;background:linear-gradient(#f1e4ce,#fffdf9);opacity:0;transition:opacity .2s}
+.cart img{transition:opacity .2s}
+.cart img.on-hover{opacity:0}
+.ccard:hover,.ccard:focus-within{border-color:transparent;box-shadow:0 1px 10px #0000001f,0 4px 5px #00000024,0 2px 4px #00000005}
+.ccard:hover .cbody,.ccard:hover .cacts,.ccard:focus-within .cbody,.ccard:focus-within .cacts{background:#f9f9f9}
 .ccard:hover .cart::before,.ccard:focus-within .cart::before{opacity:1}
-.ccard:hover .cart img,.ccard:focus-within .cart img{filter:brightness(.82) saturate(1.4)}
+.ccard:hover .cart img,.ccard:focus-within .cart img{opacity:0}
+.ccard:hover .cart img.on-hover,.ccard:focus-within .cart img.on-hover{opacity:1}
 /* o cartão recorta o conteúdo: foco por dentro para não ser cortado */
 .cacts button:focus-visible{outline-offset:-2px}
 

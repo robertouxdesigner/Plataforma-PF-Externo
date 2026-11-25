@@ -53,6 +53,8 @@ import { Modals, Store, Toasts } from '../shared/store';
               <a class="cart" [routerLink]="['/documento', x.id]" [attr.aria-label]="'Visualizar ' + x.kind + ' nº ' + x.num">
                 <img class="shield" src="carteira/shield.svg" width="209.794" height="129.205" alt="">
                 <img class="idc" src="carteira/id-card.svg" width="43" height="30.8297" alt="">
+                <img class="shield on-hover" src="carteira/shield-hover.svg" width="209.781" height="129.203" alt="">
+                <img class="idc on-hover" src="carteira/id-card-hover.svg" width="43" height="30.8281" alt="">
                 <span class="pill" [class]="s.status(x).k">{{ s.status(x).t }}</span>
               </a>
               <small>{{ x.short }}</small>
