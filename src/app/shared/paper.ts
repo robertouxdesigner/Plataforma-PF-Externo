@@ -88,7 +88,8 @@ export class Field {
     </div>
 
     <ng-template #photo>
-      <svg viewBox="0 0 104 132" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="104" height="132" fill="#d7dfeb"/><path d="M52 30c13 0 21 9 21 23s-8 27-21 27-21-13-21-27 8-23 21-23z" fill="#8a6a55"/><path d="M30 46c0-14 9-22 22-22s22 8 22 22c-3-6-9-9-22-9s-19 3-22 9z" fill="#2b2420"/><path d="M8 132c3-26 20-40 44-40s41 14 44 40z" fill="#22355e"/><path d="M42 92l10 12 10-12" fill="#fff"/></svg>
+      <img class="bg" src="documento/photo-bg.svg" width="84" height="116.297" alt="">
+      <img class="person" src="documento/person.svg" width="68" height="68" alt="">
     </ng-template>
   `,
 })

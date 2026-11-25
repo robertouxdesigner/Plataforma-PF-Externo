@@ -11,7 +11,7 @@ import { Modals, Store } from '../shared/store';
   host: { style: 'display:block' },
   template: `
     @if (x(); as x) {
-      <nav class="crumb" aria-label="Navegação"><a routerLink="/carteira">Carteira</a><pf-icon name="right" /><span>{{ x.name }}</span></nav>
+      <nav class="crumb" aria-label="Navegação"><a routerLink="/carteira">Carteira</a><img src="documento/crumb.svg" width="18" height="18" alt=""><span>{{ x.name }}</span></nav>
       @if (st().k === 'bad' && x.id === 'cr') {
         <div class="msg bad"><pf-icon name="alert" /><span class="t"><b>Este CR está vencido desde {{ v().val }}.</b> O documento não comprova mais o registro. Solicite a revalidação para continuar com as atividades autorizadas.</span><button type="button" class="btn danger" (click)="modals.open('reval')">Solicitar revalidação</button></div>
       }
@@ -21,29 +21,29 @@ import { Modals, Store } from '../shared/store';
       @if (x.blocked) {
         <div class="msg lock"><pf-icon name="lock" /><span class="t"><b>Documento bloqueado pela PF.</b> Comunicação de extravio em 12/08/2026. Procure a unidade da PF para regularizar.</span></div>
       }
-      <div class="dhead" style="margin-top:14px">
-        <span class="tag" [class]="st().k">{{ st().t }}</span>
-        <div class="tt"><h1>{{ x.kind }}</h1><span class="mono">Nº {{ x.num }}</span></div>
-        <a class="btn out" routerLink="/carteira"><pf-icon name="back" />Voltar</a>
-        <div class="hb">
-          <button type="button" class="btn" (click)="modals.open('export', x)"><pf-icon name="export" />Exportar</button>
-          <button type="button" class="btn out" (click)="modals.open('more', x)" aria-label="Mais opções"><pf-icon name="more" /></button></div>
+      <div class="dochead">
+        <div class="dtitle">
+          <div class="line"><h1>{{ x.kind }}</h1><span class="tag" [class]="st().k">{{ st().t }}</span></div>
+          <span class="mono num">Nº {{ x.num }}</span>
+        </div>
+        <div class="dbtns">
+          <a class="btn out" routerLink="/carteira"><img src="documento/back.svg" width="18" height="18" alt="">Voltar</a>
+          <button type="button" class="btn out" (click)="modals.open('more', x)" aria-label="Mais opções"><img src="documento/more.svg" width="18" height="18" alt=""></button>
+        </div>
       </div>
       <div class="dgrid">
         <div class="dpaper">@if (!oculto()) { <pf-paper [doc]="x" /> } @else { <p class="small">Documento oculto. Use “Mostrar documento” para exibi-lo novamente.</p> }</div>
         <div>
           <div class="panel"><h4>Ações</h4><div class="pb acts4">
-            <button type="button" class="act" (click)="modals.open('export', x)"><pf-icon name="export" />Exportar</button>
-            <button type="button" class="act" (click)="s.copy(x.num, 'Número do documento copiado')"><pf-icon name="copy" />Copiar número</button>
-            @if (x.prot) { <button type="button" class="act" (click)="s.openOrigin(x)"><pf-icon name="file" />Ver solicitação de Origem</button> }
-            <button type="button" class="act" [attr.aria-pressed]="oculto()" (click)="oculto.set(!oculto())"><pf-icon [name]="oculto() ? 'eye' : 'eyeoff'" />{{ oculto() ? 'Mostrar documento' : 'Ocultar documento' }}</button></div></div>
+            <button type="button" class="act" (click)="modals.open('export', x)"><img src="documento/export.svg" width="22" height="22" alt="">Exportar</button>
+            <button type="button" class="act" (click)="s.copy(x.num, 'Número do documento copiado')"><img src="documento/copy.svg" width="22" height="22" alt="">Copiar número</button>
+            @if (x.prot) { <button type="button" class="act" (click)="s.openOrigin(x)"><img src="documento/origin.svg" width="22" height="22" alt="">Ver solicitação de Origem</button> }
+            <button type="button" class="act" [attr.aria-pressed]="oculto()" (click)="oculto.set(!oculto())">@if (oculto()) { <pf-icon name="eye" /> } @else { <img src="documento/eye-off.svg" width="22" height="22" alt=""> }{{ oculto() ? 'Mostrar documento' : 'Ocultar documento' }}</button></div></div>
           <div class="panel"><h4>Informações</h4><div class="pb" style="padding-block:4px">
             <div class="kv"><span>Emissão</span><b class="mono">{{ v().em }}</b></div><div class="kv"><span>Validade</span><b class="mono">{{ v().val }}</b></div>
             @for (f of x.fields; track f[0]) { <div class="kv"><span>{{ f[0] }}</span><b>{{ f[1] }}</b></div> }
             <div class="kv"><span>Origem</span><b>{{ x.integ ? 'Integração · sistema de passaportes' : 'Emitido pela Plataforma PF' }}</b></div>
             @if (x.prot) { <div class="kv"><span>Solicitação de origem</span><b><button type="button" class="lnk mono" (click)="s.openOrigin(x)">{{ x.prot }}</button></b></div> }</div></div>
-          <button type="button" class="rmv" (click)="modals.open('remove', x)"><pf-icon name="trash" />Remover da carteira</button>
-          <p class="small">Remover tira o documento só da sua carteira (portal e app). Ele continua válido na Polícia Federal.</p>
         </div>
       </div>
     }

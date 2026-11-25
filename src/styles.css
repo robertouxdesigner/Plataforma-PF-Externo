@@ -178,9 +178,9 @@ table.dt{width:100%;border-collapse:collapse;font-size:12.5px;min-width:760px}
 
 /* ---------- paper document (modelo P&B da GTE) ---------- */
 .paper{position:relative;background:var(--paper);color:var(--ink);border-radius:2px;box-shadow:0 0 0 1px var(--rule),0 10px 26px -16px rgba(0,0,0,.45);padding:18px 18px 16px;font-size:12px;line-height:1.35;overflow:hidden}
-.paper::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;background:url("/paper-mark.png") center 58%/58% no-repeat;filter:grayscale(1)}
+.paper::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;background:url("/paper-mark.png") center 58%/58% no-repeat}
 .p-head{position:relative;display:grid;grid-template-columns:46px 1fr;gap:12px;align-items:center;padding-bottom:10px;border-bottom:2px solid var(--ink)}
-.p-head img{width:46px;filter:grayscale(1)}
+.p-head img{width:46px}
 .p-head small{display:block;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);line-height:1.3}
 .p-head b{display:block;font-size:13px;letter-spacing:.06em;margin-top:1px}
 .p-title{position:relative;margin:12px 0 8px;text-align:center}
@@ -195,7 +195,10 @@ table.dt{width:100%;border-collapse:collapse;font-size:12.5px;min-width:760px}
 .p-f b{display:block;font-size:12px;font-weight:500;word-break:break-word}
 .p-f b.mono{font-size:11.5px}
 .p-id{position:relative;display:grid;grid-template-columns:86px 1fr;gap:10px;margin-top:10px}
-.p-photo{width:86px;height:108px;border:1px solid var(--rule);overflow:hidden;background:#dfe5ee;filter:grayscale(.2)}
+.p-photo{position:relative;width:86px;height:116.3px}
+.p-photo img{position:absolute;max-width:none}
+.p-photo .bg{top:0;left:0}
+.p-photo .person{top:26.9px;left:8.5px}
 .p-table{position:relative;width:100%;border-collapse:collapse;font-size:10.5px}
 .p-table th,.p-table td{border:1px solid var(--rule);padding:4px 5px;text-align:left}
 .p-table th{background:var(--bar);font-size:8.5px;text-transform:uppercase;letter-spacing:.04em}
@@ -445,3 +448,14 @@ pf-carteira .tscroll{margin:36px 0 0}
   body:not(.menu) .side a .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   body:not(.menu) .side a .new{position:absolute;top:6px;right:6px;width:8px;height:8px;padding:0;margin:0;border-radius:50%;overflow:hidden;color:transparent;font-size:0}
 }
+
+/* Documento — Figma Portal PF, nó 38290:8194 */
+.dochead{display:flex;flex-wrap:wrap;gap:14px 24px;justify-content:space-between;align-items:center;margin:14px 0 18px}
+.dtitle{flex:0 1 640px;min-width:0}
+.dtitle .line{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.dtitle h1{margin:0;font-size:22px;font-weight:500;line-height:26.4px;color:var(--title);text-wrap:balance}
+.dtitle .tag{flex:none}
+.dtitle .num{display:block;margin-top:2px;font-size:13px;line-height:18.85px;color:var(--muted)}
+.dbtns{display:flex;gap:14px;margin-left:auto}
+.dbtns .btn{gap:8px;font-weight:600}
+pf-documento .panel>h4{background:#fff;border-bottom:1px solid #ecedee;line-height:17.4px}
