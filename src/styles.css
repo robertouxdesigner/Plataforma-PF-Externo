@@ -396,9 +396,13 @@ pf-carteira .btn{gap:8px;font-weight:600}
 pf-carteira .tbar{margin:0;padding:38px 18px 0 0}
 pf-carteira .tbar h2{line-height:29px;color:var(--table-title)}
 .filter-label{margin:16px 0 0;font-size:12.5px;line-height:18px;color:var(--muted)}
-pf-carteira .chips{margin:0;padding-top:14px}
+pf-carteira .chips{margin:0;padding-top:14px;flex:1}
+.filter-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px}
+.filter-row .seg button.on{background:var(--gov)}
+.filter-row .seg button img{filter:brightness(0) opacity(.55)}
+.filter-row .seg button.on img{filter:brightness(0) invert(1)}
 pf-carteira .tscroll{margin:36px 0 0}
-.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,256px),1fr));gap:24px;margin-top:36px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,max(256px,calc((100% - 72px) / 4))),1fr));gap:24px;margin-top:36px}
 .ccard{display:flex;flex-direction:column;min-width:0;border:1px solid #ecedee;border-radius:8px;overflow:hidden;background:#fff}
 .cbody{display:flex;flex-direction:column;padding:16px;background:#fff;overflow-wrap:anywhere}
 .cart{position:relative;display:block;height:151px;overflow:hidden;border-radius:8px;background:linear-gradient(#e2f0ff,#fdfcfe);margin-bottom:16px}
@@ -408,7 +412,7 @@ pf-carteira .tscroll{margin:36px 0 0}
 .cart .pill{position:absolute;top:113px;left:50%;transform:translateX(-50%);height:18px;display:flex;align-items:center;padding:3px 7px;border-radius:80px;font-size:11px;white-space:nowrap}
 .cart .pill.ok{top:121px;min-width:59px;justify-content:center;height:18px;font-size:10px;background:#168821;color:#fff}
 .cart .pill.warn{background:#f8b62b;color:#3a2600}
-.cart .pill.lock,.cart .pill.bad{background:#d85965;color:#111213}
+.cart .pill.lock,.cart .pill.bad{background:#d85965;color:#fff}
 .cbody small{font-size:8px;font-weight:700;letter-spacing:.84px;line-height:15px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .cbody b{font-size:14.5px;font-weight:500;line-height:18.85px;color:#212529}
 .cbody .num{font-size:12px;line-height:17.4px;color:var(--muted)}
@@ -459,3 +463,5 @@ pf-carteira .tscroll{margin:36px 0 0}
 .dbtns{display:flex;gap:14px;margin-left:auto}
 .dbtns .btn{gap:8px;font-weight:600}
 pf-documento .panel>h4{background:#fff;border-bottom:1px solid #ecedee;line-height:17.4px}
+pf-carteira .tbar{gap:1px 1px;row-gap:16px}
+.cacts button:not(.more){justify-content:flex-start;padding-left:16px}

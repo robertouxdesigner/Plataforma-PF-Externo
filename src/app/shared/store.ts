@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { AG, BASE, Doc, HIST, HistEntry, SolRow, buildSol, d, days } from './data';
+import { AG, BASE, Doc, HIDDEN, HIST, HistEntry, SolRow, buildSol, d, days } from './data';
 
 export interface Status { k: string; t: string }
 
@@ -98,6 +98,8 @@ export class Store {
     const q = this.q().trim().toLowerCase(), cat = this.cat(), st = this.st();
     return this.docs().filter(x => {
       const s = this.status(x).k;
+      // ocultos aparecem somente no filtro próprio
+      if (this.hidden().has(x.id) !== (cat === HIDDEN)) return false;
       if (cat === 'Armas e munições' && x.cat !== 'arma') return false;
       if (cat === 'Viagem' && x.cat !== 'viagem') return false;
       if (st === 'validos' && s !== 'ok') return false;

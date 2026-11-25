@@ -2,6 +2,7 @@ export const TODAY = new Date(2026, 9, 14);
 export const NAME = 'CARLOS EDUARDO MENDES RIBEIRO';
 export const CPF = '123.456.789-09';
 export const EMAIL = 'carlos.ribeiro@email.com.br';
+export const HIDDEN = 'Carteiras Ocultas';
 
 export interface Doc {
   id: string; type: string; short: string; kind: string; name: string; num: string;

@@ -1,8 +1,8 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CPF } from '../shared/data';
+import { CPF, HIDDEN } from '../shared/data';
 import { Icon } from '../shared/icon';
-import { Modals, Store } from '../shared/store';
+import { Modals, Store, Toasts } from '../shared/store';
 
 @Component({
   selector: 'pf-carteira',
@@ -20,7 +20,6 @@ import { Modals, Store } from '../shared/store';
       <div style="flex:1;min-width:240px"><h2 class="page-title">Carteira</h2><p class="page-sub">Documentos emitidos pela Polícia Federal para o CPF <span class="mono">{{ cpf }}</span>. Eles também aparecem no app PF Digital.</p></div>
       <div style="display:flex;gap:8px">
         <button type="button" class="btn out bell" (click)="notif()"><img src="carteira/bell.svg" width="18" height="18" alt="">Avisos@if (unread()) {<span class="bd">{{ unread() }}</span>}</button>
-        <button type="button" class="btn out" (click)="modals.open('prefs')"><img src="carteira/gear.svg" width="18" height="18" alt="">Preferências</button>
       </div>
     </div>
     <div class="cstats">
@@ -32,32 +31,34 @@ import { Modals, Store } from '../shared/store';
     <div class="tbar"><h2>Meus documentos</h2>
       <input class="inp" type="search" placeholder="Buscar por nome ou número" [value]="s.q()" (input)="s.q.set(val($event))" aria-label="Buscar documentos">
       <span class="grow"></span>
-      <div class="seg" role="group" aria-label="Modo de exibição">
-        <button type="button" [class.on]="s.viewMode() === 'cards'" [attr.aria-pressed]="s.viewMode() === 'cards'" (click)="s.setView('cards')"><img src="carteira/grid.svg" width="18" height="18" alt="">Cartões</button>
-        <button type="button" [class.on]="s.viewMode() === 'lista'" [attr.aria-pressed]="s.viewMode() === 'lista'" (click)="s.setView('lista')"><img src="carteira/list.svg" width="18" height="18" alt="">Lista</button>
-      </div>
       <a class="btn" routerLink="/adicionar"><img src="carteira/plus.svg" width="18" height="18" alt="">Adicionar documento</a></div>
     <p class="filter-label">Filtro:</p>
-    <div class="chips">
-      @for (c of cats; track c) { <button type="button" class="chip" [class.on]="s.cat() === c" [attr.aria-pressed]="s.cat() === c" (click)="s.cat.set(c)">{{ c }}</button> }
+    <div class="filter-row">
+      <div class="chips">
+        @for (c of cats; track c) { <button type="button" class="chip" [class.on]="s.cat() === c" [attr.aria-pressed]="s.cat() === c" (click)="s.cat.set(c)">{{ c }}</button> }
+      </div>
+        <div class="seg" role="group" aria-label="Modo de exibição">
+          <button type="button" [class.on]="s.viewMode() === 'cards'" [attr.aria-pressed]="s.viewMode() === 'cards'" (click)="s.setView('cards')"><img src="carteira/grid.svg" width="18" height="18" alt="">Cartões</button>
+          <button type="button" [class.on]="s.viewMode() === 'lista'" [attr.aria-pressed]="s.viewMode() === 'lista'" (click)="s.setView('lista')"><img src="carteira/list.svg" width="18" height="18" alt="">Lista</button>
+        </div>
     </div>
 
     @if (!s.cartList().length) {
-      <div class="empty">Nenhum documento encontrado com esses filtros.<br><button type="button" class="lnk" style="margin-top:8px" (click)="clear()">Limpar filtros</button></div>
+      <div class="empty">{{ s.cat() === HIDDEN && !s.hidden().size ? 'Nenhuma carteira oculta.' : 'Nenhum documento encontrado com esses filtros.' }}<br><button type="button" class="lnk" style="margin-top:8px" (click)="clear()">Limpar filtros</button></div>
     } @else if (s.viewMode() === 'cards') {
       <div class="cgrid">
         @for (x of s.cartList(); track x.id) {
           <article class="ccard">
             <div class="cbody">
-              <a class="cart" [routerLink]="['/documento', x.id]" [attr.aria-label]="'Visualizar ' + x.kind + (s.hidden().has(x.id) ? '' : ' nº ' + x.num)">
+              <a class="cart" [routerLink]="['/documento', x.id]" [attr.aria-label]="'Visualizar ' + x.kind + ' nº ' + x.num">
                 <img class="shield" src="carteira/shield.svg" width="209.794" height="129.205" alt="">
                 <img class="idc" src="carteira/id-card.svg" width="43" height="30.8297" alt="">
                 <span class="pill" [class]="s.status(x).k">{{ s.status(x).t }}</span>
               </a>
               <small>{{ x.short }}</small>
               <b>{{ x.name }}</b>
-              <span class="mono num">Nº {{ s.hidden().has(x.id) ? '••••••' : x.num }}</span>
-              <span class="valid">Validade: <span class="mono">{{ s.hidden().has(x.id) ? '••/••/••••' : s.view(x).val }}</span></span>
+              <span class="mono num">Nº {{ x.num }}</span>
+              <span class="valid">Validade: <span class="mono">{{ s.view(x).val }}</span></span>
             </div>
             <img class="line" src="carteira/line.svg" width="288" height="1" alt="">
             <div class="cacts">
@@ -77,6 +78,9 @@ import { Modals, Store } from '../shared/store';
               <button type="button" class="ab" title="Exportar" aria-label="Exportar" (click)="modals.open('export', x)"><pf-icon name="export" /></button>
               <button type="button" class="ab" title="QR Code" aria-label="QR Code" (click)="modals.open('qr', x)"><pf-icon name="qr" /></button>
               <a class="ab" title="Histórico" aria-label="Histórico" [routerLink]="['/historico', x.id]"><pf-icon name="hist" /></a>
+              @if (s.hidden().has(x.id)) {
+                <button type="button" class="ab" title="Reexibir Carteira" aria-label="Reexibir Carteira" (click)="reshow(x.id)"><pf-icon name="eye" /></button>
+              }
               <button type="button" class="ab" title="Remover da carteira" aria-label="Remover da carteira" (click)="modals.open('remove', x)"><pf-icon name="trash" /></button>
             </div></td></tr>
         }
@@ -88,10 +92,13 @@ export class Carteira {
   s = inject(Store);
   modals = inject(Modals);
   cpf = CPF;
-  cats = ['Todos', 'Armas e munições', 'Viagem'];
+  HIDDEN = HIDDEN;
+  cats = ['Todos', 'Armas e munições', 'Viagem', HIDDEN];
   crDoc = computed(() => this.s.docs().find(x => x.id === 'cr'));
   locked = computed(() => this.s.docs().filter(x => this.s.status(x).k === 'lock'));
   unread = computed(() => (this.s.read() ? 0 : 3));
+  private toast = inject(Toasts);
+  reshow(id: string) { this.s.toggleHidden(id); this.toast.show('Carteira reexibida'); }
   val(e: Event) { return (e.target as HTMLInputElement).value; }
   clear() { this.s.q.set(''); this.s.cat.set('Todos'); this.s.st.set('todos'); }
   notif() { this.modals.open('notif', undefined, this.s.read() ? 'read' : 'unread'); this.s.read.set(true); }
