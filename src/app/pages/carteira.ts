@@ -23,10 +23,10 @@ import { Modals, Store, Toasts } from '../shared/store';
       </div>
     </div>
     <div class="cstats">
-      <button type="button" class="cstat k-all" [class.sel]="s.st() === 'todos'" [attr.aria-pressed]="s.st() === 'todos'" (click)="s.st.set('todos')"><span class="h">MINHAS PENDÊNCIAS</span><span class="b"><span class="n">{{ s.docs().length }}</span><span class="l">solicitações pendentes<br>de ação</span></span></button>
+      <button type="button" class="cstat k-all" [class.sel]="s.st() === 'todos'" [attr.aria-pressed]="s.st() === 'todos'" (click)="s.st.set('todos')"><span class="h">MINHAS PENDÊNCIAS</span><span class="b"><span class="n">{{ s.docs().length }}</span><span class="l">solicitações pendentes de ação</span></span></button>
       <button type="button" class="cstat k-ok" [class.sel]="s.st() === 'validos'" [attr.aria-pressed]="s.st() === 'validos'" (click)="s.st.set('validos')"><span class="h">VÁLIDOS</span><span class="b"><span class="n">{{ s.count('ok') }}</span><span class="l">Documentos em vigor</span></span></button>
       <button type="button" class="cstat k-warn" [class.sel]="s.st() === 'atencao'" [attr.aria-pressed]="s.st() === 'atencao'" (click)="s.st.set('atencao')"><span class="h">PRECISAM DE ATENÇÃO</span><span class="b"><span class="n">{{ s.count('warn') + s.count('bad') }}</span><span class="l">Vencidos ou a vencer<br>em 30 dias</span></span></button>
-      <button type="button" class="cstat k-lock" [class.sel]="s.st() === 'bloqueados'" [attr.aria-pressed]="s.st() === 'bloqueados'" (click)="s.st.set('bloqueados')"><span class="h">PRECISAM DE ATENÇÃO</span><span class="b"><span class="n">{{ s.count('lock') }}</span><span class="l">bloqueados<br>pela PF</span></span></button>
+      <button type="button" class="cstat k-lock" [class.sel]="s.st() === 'bloqueados'" [attr.aria-pressed]="s.st() === 'bloqueados'" (click)="s.st.set('bloqueados')"><span class="h">PRECISAM DE ATENÇÃO</span><span class="b"><span class="n">{{ s.count('lock') }}</span><span class="l">bloqueados pela PF</span></span></button>
     </div>
     <div class="tbar"><h2>Meus documentos</h2>
       <input class="inp" type="search" placeholder="Buscar por nome ou número" [value]="s.q()" (input)="s.q.set(val($event))" aria-label="Buscar documentos">

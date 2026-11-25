@@ -383,12 +383,15 @@ pf-carteira .msg .t{color:#212529}
 pf-carteira .page-title{line-height:34.8px}
 pf-carteira .page-sub{max-width:551px;line-height:20.3px}
 pf-carteira .btn{gap:8px;font-weight:600}
-.cstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px}
-.cstat{display:flex;flex-direction:column;justify-content:center;gap:32px;text-align:left;background:#fff;border:1px solid #dadadd;border-radius:4px;padding:24px 32px 32px 24px;color:#373c42}
+.cstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.cstat{display:flex;flex-direction:column;justify-content:center;gap:32px;text-align:left;background:#fff;border:1px solid #dadadd;border-radius:4px;padding:24px;color:#373c42}
 .cstat span{display:block}
-.cstat .h{font-size:16px;font-weight:700;line-height:1.2}
-.cstat .n{font-size:30px;font-weight:500;line-height:40px;margin-bottom:8px}
-.cstat .l{font-size:14px;line-height:1.2}
+.cstat .h{font-size:12px;font-weight:700;line-height:19.2px}
+.cstat .b{display:flex;align-items:center;gap:8px}
+.cstat .n{font-size:30px;font-weight:500;line-height:40px}
+.cstat .l{min-width:0;font-size:14px;line-height:16.8px}
+.cstat.k-warn .b{align-items:flex-start}
+.cstat.k-lock{gap:8px}
 .cstat.sel{border-color:#1f628d;border-bottom-width:6px}
 .cstat.k-all .n,.cstat.k-warn .n{color:#856404}
 .cstat.k-ok .n{color:#287831}
