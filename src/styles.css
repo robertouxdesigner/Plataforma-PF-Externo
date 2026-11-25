@@ -60,10 +60,9 @@ svg.i{width:18px;height:18px;flex:none}
 .side a .new{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:.06em;background:#ffcd07;color:#3d3200;padding:2px 6px;border-radius:3px}
 .main{flex:1;min-width:0;padding-block:44px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .wrap{max-width:1100px;margin:0 auto}
-body.noside .side{display:none}
 @media (max-width:900px){
-  .side{position:fixed;left:0;top:0;bottom:0;max-height:none;z-index:50;width:260px;padding-top:calc(20px + env(safe-area-inset-top,0px));transform:translateX(-102%);transition:transform .25s}
-  body.menu .side{transform:none}
+  body.menu .shell{padding-left:64px}
+  body.menu .side{position:fixed;left:0;top:0;bottom:0;max-height:none;z-index:50;width:260px;background:var(--bg);padding-top:calc(20px + env(safe-area-inset-top,0px))}
   body.menu .side-scrim{display:block}
   .main{padding-top:24px}
 }
@@ -369,3 +368,78 @@ a.dcard.add{color:var(--link)}a.ab{color:var(--link)}a.act{color:var(--link)}
 .stats.flat .stat .l{font-size:16px;color:#343a40}
 .stats.flat .stat:nth-child(1) .n{color:#856404}
 .stats.flat .stat:nth-child(3) .n{color:#6a6d7c}
+
+/* Carteira (home) — Figma Portal PF, nó 38258:7170 */
+.main:has(pf-carteira){padding:10px 32px 64px 0}
+.main:has(pf-carteira) .wrap{max-width:none}
+pf-carteira .msg{margin-bottom:0;padding:9px 12px}
+pf-carteira .msg+.msg{margin-top:8px}
+pf-carteira .msg .t{color:#212529}
+pf-carteira .page-title{line-height:34.8px}
+pf-carteira .page-sub{max-width:551px;line-height:20.3px}
+pf-carteira .btn{gap:8px;font-weight:600}
+.cstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px}
+.cstat{display:flex;flex-direction:column;justify-content:center;gap:32px;text-align:left;background:#fff;border:1px solid #dadadd;border-radius:4px;padding:24px 32px 32px 24px;color:#373c42}
+.cstat span{display:block}
+.cstat .h{font-size:16px;font-weight:700;line-height:1.2}
+.cstat .n{font-size:30px;font-weight:500;line-height:40px;margin-bottom:8px}
+.cstat .l{font-size:14px;line-height:1.2}
+.cstat.sel{border-color:#1f628d;border-bottom-width:6px}
+.cstat.k-all .n,.cstat.k-warn .n{color:#856404}
+.cstat.k-ok .n{color:#287831}
+.cstat.k-lock .n{color:#3363cc}
+pf-carteira .tbar{margin:0;padding:38px 18px 0 0}
+pf-carteira .tbar h2{line-height:29px;color:var(--table-title)}
+.filter-label{margin:16px 0 0;font-size:12.5px;line-height:18px;color:var(--muted)}
+pf-carteira .chips{margin:0;padding-top:14px}
+pf-carteira .tscroll{margin:36px 0 0}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,256px),1fr));gap:24px;margin-top:36px}
+.ccard{display:flex;flex-direction:column;min-width:0;border:1px solid #ecedee;border-radius:8px;overflow:hidden;background:#fff}
+.cbody{display:flex;flex-direction:column;padding:16px;background:#fff;overflow-wrap:anywhere}
+.cart{position:relative;display:block;height:151px;overflow:hidden;border-radius:8px;background:linear-gradient(#e2f0ff,#fdfcfe);margin-bottom:16px}
+.cart img{position:absolute;max-width:none}
+.cart .shield{top:65.4px;left:calc(50% - 105px)}
+.cart .idc{top:19px;left:calc(50% - 21.5px)}
+.cart .pill{position:absolute;top:113px;left:50%;transform:translateX(-50%);height:18px;display:flex;align-items:center;padding:3px 7px;border-radius:80px;font-size:11px;white-space:nowrap}
+.cart .pill.ok{top:121px;min-width:59px;justify-content:center;height:18px;font-size:10px;background:#168821;color:#fff}
+.cart .pill.warn{background:#f8b62b;color:#3a2600}
+.cart .pill.lock,.cart .pill.bad{background:#d85965;color:#111213}
+.cbody small{font-size:8px;font-weight:700;letter-spacing:.84px;line-height:15px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.cbody b{font-size:14.5px;font-weight:500;line-height:18.85px;color:#212529}
+.cbody .num{font-size:12px;line-height:17.4px;color:var(--muted)}
+.cbody .valid{font-size:12px;line-height:17.4px;color:var(--muted);padding-top:22px}
+.ccard .line{display:block;width:100%}
+.cacts{display:flex;background:#fff}
+.cacts button{flex:1;display:flex;gap:8px;align-items:center;justify-content:center;border:0;background:none;padding:9px 4px;font-size:12px;line-height:17.4px;color:#3363cc}
+.cacts button:hover{background:var(--side-hover)}
+.cacts button.more{flex:0 0 41px}
+.cacts .up{width:16px;height:16px;display:grid;place-items:center}
+@media (max-width:1200px){.cstats{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}}
+@media (max-width:900px){.main:has(pf-carteira){padding:16px 16px 48px}}
+@media (max-width:576px){.cstats{grid-template-columns:minmax(0,1fr)}}
+
+/* hover do cartão: azul mais escuro (Frontline azul 200/100) */
+.cart::before{content:"";position:absolute;inset:0;background:linear-gradient(#a1c6ed,#cfdbe8);opacity:0;transition:opacity .2s}
+.cart img{transition:filter .2s}
+.ccard:hover .cart::before,.ccard:focus-within .cart::before{opacity:1}
+.ccard:hover .cart img,.ccard:focus-within .cart img{filter:brightness(.82) saturate(1.4)}
+/* o cartão recorta o conteúdo: foco por dentro para não ser cortado */
+.cacts button:focus-visible{outline-offset:-2px}
+
+/* menu recolhido: barra só com ícones (desktop recolhido e telas até 900px fechadas) */
+@media (min-width:901px){
+  body.noside .side{width:64px;padding-top:16px}
+  body.noside .side-title{display:none}
+  body.noside .side a{position:relative;justify-content:center;gap:0;margin:0 8px 8px;padding:0;height:48px;border-radius:4px}
+  body.noside .side a svg.i{width:24px;height:24px}
+  body.noside .side a .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  body.noside .side a .new{position:absolute;top:6px;right:6px;width:8px;height:8px;padding:0;margin:0;border-radius:50%;overflow:hidden;color:transparent;font-size:0}
+}
+@media (max-width:900px){
+  body:not(.menu) .side{width:64px;padding-top:16px}
+  body:not(.menu) .side-title{display:none}
+  body:not(.menu) .side a{position:relative;justify-content:center;gap:0;margin:0 8px 8px;padding:0;height:48px;border-radius:4px}
+  body:not(.menu) .side a svg.i{width:24px;height:24px}
+  body:not(.menu) .side a .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  body:not(.menu) .side a .new{position:absolute;top:6px;right:6px;width:8px;height:8px;padding:0;margin:0;border-radius:50%;overflow:hidden;color:transparent;font-size:0}
+}

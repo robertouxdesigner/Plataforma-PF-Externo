@@ -38,8 +38,8 @@ import { Modals, Store, Toasts } from './shared/store';
       <aside class="side" id="side" aria-label="Menu">
 <h2 class="page-title side-title">Sub-menu</h2>
         <nav>
-          <a routerLink="/solicitacoes" [class.on]="!isCart()" [attr.aria-current]="!isCart() ? 'page' : null"><pf-icon name="file" />Solicitações</a>
-          <a routerLink="/carteira" [class.on]="isCart()" [attr.aria-current]="isCart() ? 'page' : null"><pf-icon name="wallet" />Carteira<span class="new">NOVO</span></a>
+          <a routerLink="/solicitacoes" title="Solicitações" [class.on]="!isCart()" [attr.aria-current]="!isCart() ? 'page' : null"><pf-icon name="file" /><span class="lbl">Solicitações</span></a>
+          <a routerLink="/carteira" title="Carteira" [class.on]="isCart()" [attr.aria-current]="isCart() ? 'page' : null"><pf-icon name="wallet" /><span class="lbl">Carteira</span><span class="new">NOVO</span></a>
         </nav>
       </aside>
       <div class="side-scrim" (click)="closeMenu()"></div>
