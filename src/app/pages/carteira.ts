@@ -49,21 +49,20 @@ import { Modals, Store } from '../shared/store';
         @for (x of s.cartList(); track x.id) {
           <article class="ccard">
             <div class="cbody">
-              <a class="cart" [routerLink]="['/documento', x.id]" [attr.aria-label]="'Visualizar ' + x.kind + ' nº ' + x.num">
+              <a class="cart" [routerLink]="['/documento', x.id]" [attr.aria-label]="'Visualizar ' + x.kind + (s.hidden().has(x.id) ? '' : ' nº ' + x.num)">
                 <img class="shield" src="carteira/shield.svg" width="209.794" height="129.205" alt="">
                 <img class="idc" src="carteira/id-card.svg" width="43" height="30.8297" alt="">
                 <span class="pill" [class]="s.status(x).k">{{ s.status(x).t }}</span>
               </a>
               <small>{{ x.short }}</small>
               <b>{{ x.name }}</b>
-              <span class="mono num">Nº {{ x.num }}</span>
-              <span class="valid">Validade: <span class="mono">{{ s.view(x).val }}</span></span>
+              <span class="mono num">Nº {{ s.hidden().has(x.id) ? '••••••' : x.num }}</span>
+              <span class="valid">Validade: <span class="mono">{{ s.hidden().has(x.id) ? '••/••/••••' : s.view(x).val }}</span></span>
             </div>
             <img class="line" src="carteira/line.svg" width="288" height="1" alt="">
             <div class="cacts">
               <button type="button" (click)="modals.open('export', x)"><span class="up"><img src="carteira/upload.svg" width="11.6499" height="11.6667" alt=""></span>Exportar</button>
-              <button type="button" (click)="modals.open('qr', x)"><img src="carteira/qr.svg" width="15" height="15" alt="">QR Code</button>
-              <button type="button" class="more" (click)="modals.open('more', x)" aria-label="Mais opções"><img src="carteira/more.svg" width="15" height="15" alt=""></button>
+              <button type="button" class="more" (click)="modals.open('more', x, 'card')" aria-label="Mais opções"><img src="carteira/more.svg" width="15" height="15" alt=""></button>
             </div>
           </article>
         }

@@ -38,7 +38,7 @@ import { Modals, Store } from '../shared/store';
             <button type="button" class="act" (click)="modals.open('export', x)"><img src="documento/export.svg" width="22" height="22" alt="">Exportar</button>
             <button type="button" class="act" (click)="s.copy(x.num, 'Número do documento copiado')"><img src="documento/copy.svg" width="22" height="22" alt="">Copiar número</button>
             @if (x.prot) { <button type="button" class="act" (click)="s.openOrigin(x)"><img src="documento/origin.svg" width="22" height="22" alt="">Ver solicitação de Origem</button> }
-            <button type="button" class="act" [attr.aria-pressed]="oculto()" (click)="oculto.set(!oculto())">@if (oculto()) { <pf-icon name="eye" /> } @else { <img src="documento/eye-off.svg" width="22" height="22" alt=""> }{{ oculto() ? 'Mostrar documento' : 'Ocultar documento' }}</button></div></div>
+            <button type="button" class="act" [attr.aria-pressed]="oculto()" (click)="s.toggleHidden(x.id)">@if (oculto()) { <pf-icon name="eye" /> } @else { <img src="documento/eye-off.svg" width="22" height="22" alt=""> }{{ oculto() ? 'Mostrar documento' : 'Ocultar documento' }}</button></div></div>
           <div class="panel"><h4>Informações</h4><div class="pb" style="padding-block:4px">
             <div class="kv"><span>Emissão</span><b class="mono">{{ v().em }}</b></div><div class="kv"><span>Validade</span><b class="mono">{{ v().val }}</b></div>
             @for (f of x.fields; track f[0]) { <div class="kv"><span>{{ f[0] }}</span><b>{{ f[1] }}</b></div> }
@@ -54,7 +54,7 @@ export class Documento implements OnDestroy {
   s = inject(Store);
   modals = inject(Modals);
   private router = inject(Router);
-  oculto = signal(false);
+  oculto = computed(() => this.s.hidden().has(this.id()));
   days = days;
   typeIcon = typeIcon;
 

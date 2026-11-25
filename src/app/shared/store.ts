@@ -52,6 +52,7 @@ export class Store {
   docs = signal<Doc[]>(BASE.map(x => ({ ...x })));
   removed = signal<{ doc: Doc; i: number }[]>([]);
   expired = signal(false);
+  hidden = signal(new Set<string>());
   cat = signal('Todos');
   st = signal('todos');
   q = signal('');
@@ -140,6 +141,10 @@ export class Store {
     try { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); } catch { /* ignora */ }
   }
 
+  toggleHidden(id: string) {
+    this.hidden.update(h => { const n = new Set(h); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  }
+
   restore(i: number) {
     const [it] = this.removed().slice(i, i + 1);
     this.removed.update(l => l.filter((_, k) => k !== i));
@@ -173,7 +178,7 @@ export class Store {
   }
   reset() {
     const v = this.viewMode();
-    this.docs.set(BASE.map(x => ({ ...x }))); this.removed.set([]); this.expired.set(false);
+    this.docs.set(BASE.map(x => ({ ...x }))); this.removed.set([]); this.expired.set(false); this.hidden.set(new Set());
     this.cat.set('Todos'); this.st.set('todos'); this.q.set(''); this.viewMode.set(v); this.read.set(false);
     this.prefs.set({ n90: true, blk: true, mail: true });
     this.sol.set(buildSol());

@@ -60,6 +60,16 @@ const SMALL = ['share', 'qr', 'valid', 'remove', 'reval', 'link', 'linked', 'num
           @case ('more') {
             @if (x) {
               <ng-container *ngTemplateOutlet="hdr; context: { $implicit: x.kind }" />
+              @if (m.seed() === 'card') {
+                <div class="mb"><p class="mono" style="margin-top:-6px">Nº {{ s.hidden().has(x.id) ? '••••••' : x.num }}</p>
+                  <ng-container *ngTemplateOutlet="opt; context: { ic: 'export', t: 'Exportar', s: 'PDF, imagem, link temporário ou e-mail', fn: to('export', x) }" />
+                  <ng-container *ngTemplateOutlet="opt; context: { ic: 'copy', t: 'Copiar número', s: 'Para colar em formulários', fn: cp(x.num, 'Número do documento copiado') }" />
+                  @if (x.prot) {
+                    <ng-container *ngTemplateOutlet="opt; context: { ic: 'file', t: 'Ver solicitação de Origem', s: 'Abre o pedido ' + x.prot + ' em Solicitações', fn: origin(x) }" />
+                  }
+                  <ng-container *ngTemplateOutlet="opt; context: { ic: s.hidden().has(x.id) ? 'eye' : 'eyeoff', t: s.hidden().has(x.id) ? 'Mostrar documento' : 'Ocultar documento', s: 'Esconde ou exibe os dados do documento', fn: hide(x) }" />
+                </div>
+              } @else {
               <div class="mb"><p class="mono" style="margin-top:-6px">Nº {{ x.num }}</p>
                 <ng-container *ngTemplateOutlet="opt; context: { ic: 'copy', t: 'Copiar número do documento', s: 'Para colar em formulários', fn: cp(x.num, 'Número copiado') }" />
                 <ng-container *ngTemplateOutlet="opt; context: { ic: 'qr', t: 'Copiar código do QR Code', s: 'Copia o código de validação', fn: cp(codeOf(x), 'Código do QR copiado') }" />
@@ -69,6 +79,7 @@ const SMALL = ['share', 'qr', 'valid', 'remove', 'reval', 'link', 'linked', 'num
                   <ng-container *ngTemplateOutlet="opt; context: { ic: 'file', t: 'Ver solicitação de origem', s: 'Abre o pedido ' + x.prot + ' em Solicitações', fn: origin(x) }" />
                 }
                 <ng-container *ngTemplateOutlet="opt; context: { ic: 'trash', t: 'Remover da carteira', s: 'Pede confirmação antes de remover', fn: to('remove', x) }" /></div>
+              }
             }
           }
           @case ('remove') {
@@ -196,6 +207,7 @@ export class ModalHost implements OnDestroy {
   cp = (t: string, msg: string) => () => { this.s.copy(t, msg); this.m.close(); };
   nav = (cmd: any[]) => () => { this.m.close(); this.router.navigate(cmd); };
   origin = (x: any) => () => this.s.openOrigin(x);
+  hide = (x: any) => () => { this.s.toggleHidden(x.id); this.m.close(); };
   dl = (x: any, ext: string) => () => { this.m.close(); this.toast.show('Download iniciado: ' + x.type + '_' + x.num.replace(/\W/g, '') + '.' + ext); };
   mail = () => () => { this.m.close(); this.toast.show('PDF enviado para ' + EMAIL); };
   share = (x: any) => () => this.m.open('share', x, 'https://servicos.pf.gov.br/v/' + Math.random().toString(36).slice(2, 10));
