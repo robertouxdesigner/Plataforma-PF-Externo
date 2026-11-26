@@ -372,7 +372,7 @@ pf-carteira .msg{margin-bottom:0;padding:9px 12px}
 pf-carteira .msg+.msg{margin-top:8px}
 pf-carteira .msg .t{color:#212529}
 pf-carteira .page-title{line-height:34.8px}
-pf-carteira .page-sub{max-width:551px;line-height:20.3px}
+pf-carteira .page-sub{max-width:none;line-height:20.3px;white-space:nowrap}
 pf-carteira .btn{gap:8px;font-weight:600}
 .cstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
 .cstat{display:flex;flex-direction:column;justify-content:center;gap:32px;text-align:left;background:#fff;border:1px solid #dadadd;border-radius:4px;padding:24px;color:#373c42}
