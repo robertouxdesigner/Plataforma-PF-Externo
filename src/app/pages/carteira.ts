@@ -31,7 +31,7 @@ import { Modals, Store, Toasts } from '../shared/store';
     <div class="searchbar">
       <div class="sgroup"><h2>Meus documentos</h2>
         <input class="inp" type="search" placeholder="Buscar por nome ou número" [value]="s.q()" (input)="s.q.set(val($event))" aria-label="Buscar documentos"></div>
-      <a class="btn" routerLink="/adicionar"><img src="carteira/plus.svg" width="18" height="18" alt="">Adicionar documento</a></div>
+    </div>
     <p class="filter-label">Filtro:</p>
     <div class="filter-row">
       <div class="chips">
@@ -43,8 +43,13 @@ import { Modals, Store, Toasts } from '../shared/store';
         </div>
     </div>
 
-    @if (!s.cartList().length) {
-      <div class="empty">{{ s.cat() === HIDDEN && !s.hidden().size ? 'Nenhuma carteira oculta.' : 'Nenhum documento encontrado com esses filtros.' }}<br><button type="button" class="lnk" style="margin-top:8px" (click)="clear()">Limpar filtros</button></div>
+    @if (s.cat() === HIDDEN && noHidden()) {
+      <div class="empty-hidden" role="status">
+        <div class="box"><img src="carteira/empty-box.svg" width="144.469" height="184.904" alt=""></div>
+        <p>Nenhuma carteira oculta adicionada.</p>
+      </div>
+    } @else if (!s.cartList().length) {
+      <div class="empty">Nenhum documento encontrado com esses filtros.<br><button type="button" class="lnk" style="margin-top:8px" (click)="clear()">Limpar filtros</button></div>
     } @else if (s.viewMode() === 'cards') {
       <div class="cgrid">
         @for (x of s.cartList(); track x.id) {
@@ -98,6 +103,7 @@ export class Carteira {
   cats = ['Todos', 'Armas e munições', 'Viagem', HIDDEN];
   crDoc = computed(() => this.s.docs().find(x => x.id === 'cr'));
   locked = computed(() => this.s.docs().filter(x => this.s.status(x).k === 'lock'));
+  noHidden = computed(() => !this.s.docs().some(x => this.s.hidden().has(x.id)));
   unread = computed(() => (this.s.read() ? 0 : 3));
   private toast = inject(Toasts);
   reshow(id: string) { this.s.toggleHidden(id); this.toast.show('Carteira reexibida'); }
