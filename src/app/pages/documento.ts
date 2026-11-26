@@ -34,7 +34,7 @@ import { Modals, Store } from '../shared/store';
       <div class="dgrid">
         <div class="dpaper">
           @if (oculto()) {
-            <p class="hidden-msg" role="status">Documento foi oculto e não removido da sua lista de carteiras.<br>Isso serve para sua gestão, porém a Polícia Federal ainda tem a visão de todos os seus documentos.<br><br>Clique em <button type="button" (click)="s.toggleHidden(x.id)">“Mostrar documento”</button> para exibi-lo novamente.</p>
+            <p class="hidden-msg" role="status">Documento ocultado.<br>O documento foi ocultado da sua lista, mas não foi removido. A Polícia Federal continua com acesso a ele.<br><br>Para exibi-lo novamente, clique em <button type="button" (click)="s.toggleHidden(x.id)">Mostrar documento</button>.</p>
             <div class="faded" aria-hidden="true" inert><pf-paper [doc]="x" /></div>
           } @else {
             <pf-paper [doc]="x" />
