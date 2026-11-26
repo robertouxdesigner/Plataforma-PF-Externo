@@ -6,7 +6,7 @@ import { Icon } from './icon';
 import { Qr } from './qr';
 import { Modals, Store, Toasts } from './store';
 
-const SMALL = ['share', 'qr', 'valid', 'remove', 'reval', 'link', 'linked', 'num', 'prefs'];
+const SMALL = ['qr', 'valid', 'remove', 'reval', 'link', 'linked', 'num', 'prefs'];
 
 @Component({
   selector: 'pf-modal-host',
@@ -16,25 +16,17 @@ const SMALL = ['share', 'qr', 'valid', 'remove', 'reval', 'link', 'linked', 'num
     <ng-template #opt let-ic="ic" let-t="t" let-sub="s" let-fn="fn"><button type="button" class="mopt" (click)="fn()"><span class="ic"><pf-icon [name]="ic" /></span><div><b>{{ t }}</b><small>{{ sub }}</small></div><pf-icon name="right" /></button></ng-template>
 
     <div class="scrim" [class.on]="m.on()" (click)="backdrop($event)">
-      <div class="modal" [class.sm]="small()" role="dialog" aria-modal="true" aria-labelledby="m-title">
+      <div class="modal" [class.sm]="small()" [class.export]="m.kind() === 'export'" role="dialog" aria-modal="true" aria-labelledby="m-title">
         @let x = m.doc();
         @switch (m.kind()) {
           @case ('export') {
             @if (x) {
-              <ng-container *ngTemplateOutlet="hdr; context: { $implicit: 'Exportar documento' }" />
-              <div class="mb"><p>{{ x.kind }} · <span class="mono">{{ x.num }}</span></p>
-                <ng-container *ngTemplateOutlet="opt; context: { ic: 'pdf', t: 'Baixar PDF assinado', s: 'Documento oficial com assinatura digital e QR Code', fn: dl(x, 'pdf') }" />
-                <ng-container *ngTemplateOutlet="opt; context: { ic: 'img', t: 'Baixar imagem (PNG)', s: 'Imagem do documento para guardar ou anexar', fn: dl(x, 'png') }" />
-                <ng-container *ngTemplateOutlet="opt; context: { ic: 'link', t: 'Criar link temporário', s: 'Quem receber vê os dados por 24 horas', fn: share(x) }" />
-                <ng-container *ngTemplateOutlet="opt; context: { ic: 'mail', t: 'Enviar por e-mail', s: 'Envia o PDF para o e-mail cadastrado no gov.br', fn: mail() }" /></div>
+              <div class="mh"><h3 id="m-title">Exportar documento</h3><button type="button" class="x" (click)="m.close()" aria-label="Fechar"><img src="exportar/close.svg" width="18" height="18" alt=""></button></div>
+              <div class="mb"><p>{{ x.kind }}: <span class="mono">{{ x.num }}</span></p>
+                <button type="button" class="xopt" (click)="dl(x, 'pdf')()"><span class="ic"><img src="exportar/pdf.svg" width="18" height="18" alt=""></span><span><b>Baixar PDF</b><small>Documento oficial gerado pela Polícia Federal</small></span></button>
+                <button type="button" class="xopt" (click)="dl(x, 'png')()"><span class="ic"><img src="exportar/png.svg" width="18" height="18" alt=""></span><span><b>Baixar imagem (PNG)</b><small>Imagem do documento para seu dispositivo</small></span></button></div>
               <div class="mf"><button type="button" class="btn out" (click)="m.close()">Cancelar</button></div>
             }
-          }
-          @case ('share') {
-            <ng-container *ngTemplateOutlet="hdr; context: { $implicit: 'Link temporário' }" />
-            <div class="mb"><p>O link mostra tipo, número, validade e situação do documento. CPF e foto ficam ocultos. Expira em 24 horas.</p>
-              <div class="boxed" style="padding:10px 12px"><div class="mono" style="word-break:break-all;font-size:13px">{{ m.seed() }}</div></div></div>
-            <div class="mf"><button type="button" class="btn out" (click)="m.close()">Fechar</button><button type="button" class="btn" (click)="s.copy(m.seed(), 'Link copiado. Válido por 24 horas.'); m.close()"><pf-icon name="copy" />Copiar link</button></div>
           }
           @case ('qr') {
             @if (x) {
@@ -62,7 +54,7 @@ const SMALL = ['share', 'qr', 'valid', 'remove', 'reval', 'link', 'linked', 'num
               <ng-container *ngTemplateOutlet="hdr; context: { $implicit: x.kind }" />
               @if (m.seed() === 'card') {
                 <div class="mb"><p class="mono" style="margin-top:-6px">Nº {{ x.num }}</p>
-                  <ng-container *ngTemplateOutlet="opt; context: { ic: 'export', t: 'Exportar', s: 'PDF, imagem, link temporário ou e-mail', fn: to('export', x) }" />
+                  <ng-container *ngTemplateOutlet="opt; context: { ic: 'export', t: 'Exportar', s: 'PDF ou imagem', fn: to('export', x) }" />
                   <ng-container *ngTemplateOutlet="opt; context: { ic: 'copy', t: 'Copiar número', s: 'Para colar em formulários', fn: cp(x.num, 'Número do documento copiado') }" />
                   @if (x.prot) {
                     <ng-container *ngTemplateOutlet="opt; context: { ic: 'file', t: 'Ver solicitação de Origem', s: 'Abre o pedido ' + x.prot + ' em Solicitações', fn: origin(x) }" />
@@ -212,8 +204,6 @@ export class ModalHost implements OnDestroy {
     this.toast.show(this.s.hidden().has(x.id) ? 'Movido para Carteiras Ocultas' : 'Carteira reexibida');
   };
   dl = (x: any, ext: string) => () => { this.m.close(); this.toast.show('Download iniciado: ' + x.type + '_' + x.num.replace(/\W/g, '') + '.' + ext); };
-  mail = () => () => { this.m.close(); this.toast.show('PDF enviado para ' + EMAIL); };
-  share = (x: any) => () => this.m.open('share', x, 'https://servicos.pf.gov.br/v/' + Math.random().toString(36).slice(2, 10));
   findNum(v: string) {
     v = v.trim();
     const i = this.s.removed().findIndex(r => r.doc.num === v);

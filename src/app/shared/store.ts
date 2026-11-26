@@ -16,7 +16,7 @@ export class Toasts {
   dismiss(id: number) { this.items.update(l => l.filter(t => t.id !== id)); }
 }
 
-export type ModalKind = 'export' | 'share' | 'qr' | 'valid' | 'more' | 'remove' | 'reval' | 'link' | 'linked' | 'num' | 'third' | 'notif' | 'prefs';
+export type ModalKind = 'export' | 'qr' | 'valid' | 'more' | 'remove' | 'reval' | 'link' | 'linked' | 'num' | 'third' | 'notif' | 'prefs';
 
 @Injectable({ providedIn: 'root' })
 export class Modals {
